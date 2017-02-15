@@ -1,0 +1,31 @@
+Pentru inceput am impartit programul in mai multe parti fiecare corespunzatoare unei anumite comenzi, fiecare parte fiind impartita in mai multe parti la randul ei daca este cazul.
+Pentru a imparti stringurile ce reprezinta comenzile am folosit functiile strtok si sscanf. Prima am folosit-o pentru a identifica primul cuvant iar a doua pentru a separa stringurile de numere. Comenzile INITIALIZE si FINALIZE au fost cele mai simple.
+Comanda DUMP a fost de asemenea destul de usor de implementat. A trebuit doar sa am grija sa se afiseze in modul in care trebuie: sa pun spatiu acolo unde trebuie sau linie noua. Pentru a afisa indicii la inceputul randului am folosit specificatorul pentru baza 16 in printf.
+
+ALLOC
+
+Comanda alloc am impartit-o in 4 cazuri:
+Cazul 1: Arena este goala: Daca blocul cerut incape in arena acesta este alocat.
+Cazul 2: Arena mai are si alte blocuri dar blocul solicitat incape chiar la inceputul arenei.
+Cazut 3: Arena are alte blocuri, blocul solicitat nu incape la inceput dar incape pe parcurs intre alte doua blocuri.
+Cazul 4: Blocul solicitat nu incape decat la sfarsitul arenei.
+Pentru a face alocarea am schimbat indicii vecinilor si am setat indicii noului bloc corespunzator.
+
+FREE
+
+Pentru comanda FREE am lasat blocul ce trebuie eliberat nemodificat. Singura schimbare consta in modificarea indicilor blocurilor vecine astfel incat daca se va solicita o noua alocare, zona respectiva sa fie considerata ca fiind disponibila. Atat in comanda FREE cat si in comanda ALLOC am mai inclus o variabila care tine evidenta octetilor ocupati din arena. Aceasta variabila o voi folosi in comanda SHOW.
+
+FILL
+
+Pentru comanda FREE mi s-a parut destul de ambiguu enuntul. A trebuit sa realizez singur ca aceasta comanda are ca parametru un indice ce reprezinta o zona de date ale utilizatorului din arena si nu un indice oarecare sau un indice ce reprezinta inceputul zonei de gestiune pentru un bloc de memorie. De asemenea trebuie ca utilizatorul sa aiba grija sa nu suprascrie indicii de gestiune ai unui alt bloc. Dupa ce mi-am dat seama de acest lucru am intampinat o eroare ce cred ca era cauzata de faptul ca nu am folosit la afisare un pointer de tip unsigned char ci unul de tip char. Astfel, odata ce treceam de numarul 127 afisarea nu se mai facea asa cum trebuie.
+
+SHOW
+
+FREE
+Aceasta comanda am impartit-o in trei parti, fiecare aferenta unei subcomenzi primita de SHOW. Pentru FREE am calculat numarul de zone libere iar numarul de bytes liberi l-am obtinut scazand din variabila SIZE variabila OBTS (occupied bytes). Am afisat cele 2 variabile.
+
+USAGE
+Pentru USAGE am calculat numarul de blocuri libere, numarul de blocuri de date si numarul de octeti de date. Folosind aceste 3 numere am calculat eficienta si fragmentarea.
+
+ALLOCATIONS
+In aceasta comanda am luat bloc cu bloc arena si am afisat pe rand blocul curent si blocul liber aflat dupa blocul curent. A trebuit sa fac un caz special pentru primul si ultimul bloc din arena deoarece acestea nu aveau vecini (sau aveau vecin indicele de start).
